@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:barberapp/ui/services/theme_services.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,8 +31,7 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          // ignore: avoid_print
-          print('Funcionado');
+          ThemeService().themeSwitch();
         },
         child: Icon(
           Icons.nightlight_round,
