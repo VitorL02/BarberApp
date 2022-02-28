@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
       themeMode: ThemeService().theme,
-
+      color: Colors.white,
       // ignore: prefer_const_constructors
       home: HomePage(),
     );

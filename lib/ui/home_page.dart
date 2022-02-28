@@ -2,8 +2,11 @@
 
 import 'package:barberapp/ui/services/notification_service.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
+import 'package:barberapp/ui/theme.dart';
+import 'package:barberapp/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,10 +33,33 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         // ignore: prefer_const_literals_to_create_immutables
         children: [
-          Text(
-            'Hello User',
-            style: TextStyle(fontSize: 30),
-          ),
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        DateFormat.yMMMMd().format(DateTime.now()),
+                        style: subHeadStyle,
+                      ),
+                      Text(
+                        'Hoje',
+                        style: headingStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                Button(
+                  label: "+ Novo Horário",
+                  onTap: () => null,
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -41,6 +67,9 @@ class _HomePageState extends State<HomePage> {
 
   _appBar() {
     return AppBar(
+      elevation: 0,
+      backgroundColor: context.theme.backgroundColor,
+
       leading: GestureDetector(
         onTap: () {
           ThemeService().themeSwitch();
@@ -51,15 +80,17 @@ class _HomePageState extends State<HomePage> {
           notifyHelper.scheduledNotification();
         },
         child: Icon(
-          Icons.nightlight_round,
+          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
           size: 20,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ), //Inclui itens no inicio da appBar
       // ignore: prefer_const_literals_to_create_immutables
       actions: [
-        Icon(
-          Icons.person,
-          size: 20,
+        CircleAvatar(
+          backgroundImage: AssetImage(
+            "images/222.jpg",
+          ),
         ),
         SizedBox(
           width: 20,
