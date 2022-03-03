@@ -97,10 +97,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Button(
-            label: "+ Novo Horário",
-            onTap: () => Get.to(AddSchedule()),
-          ),
+          Button(label: "+ Novo Horário", onTap: () => Get.to(AddSchedule())),
         ],
       ),
     );

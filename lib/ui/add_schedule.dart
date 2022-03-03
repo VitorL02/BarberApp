@@ -14,6 +14,20 @@ class AddSchedule extends StatefulWidget {
 }
 
 class _AddScheduleState extends State<AddSchedule> {
+  String _selectedService = 'Corte de Cabelo';
+  List<String> servicesList = [
+    'Corte de cabelo',
+    'Pintura',
+    'Unha de Gel',
+    'Escova',
+    'Manicure Simples',
+    'Maquiagem',
+    'Penteado',
+    'Cílios',
+    'Design de Sobrancelha',
+    'Sombrancelha de Rena'
+  ];
+
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   String _endTime = "00:00";
@@ -33,6 +47,30 @@ class _AddScheduleState extends State<AddSchedule> {
               ),
               InputField(
                   title: "Nome", label: "Digite o nome de quem será agendado"),
+              InputField(
+                title: "Informe o Serviço",
+                label: _selectedService,
+                widget: DropdownButton(
+                  items: servicesList.map<DropdownMenuItem<String>>(
+                    (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedService = newValue!;
+                    });
+                  },
+                  underline: Container(height: 0),
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 32,
+                  elevation: 4,
+                  style: headingStyle,
+                ),
+              ),
               InputField(
                 title: "Data do agendamento",
                 label: DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br')
