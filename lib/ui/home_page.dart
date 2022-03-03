@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, unused_element, avoid_unnecessary_containers
 
+import 'package:barberapp/ui/add_schedule.dart';
 import 'package:barberapp/ui/services/notification_service.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
 import 'package:barberapp/ui/theme.dart';
 import 'package:barberapp/ui/widgets/button.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -54,7 +56,9 @@ class _HomePageState extends State<HomePage> {
         selectionColor: primaryClr,
         selectedTextColor: Colors.white,
         onDateChange: (date) {
-          _selectedDate = date;
+          setState(() {
+            _selectedDate = date;
+          });
         },
         dateTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
@@ -83,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  DateFormat.yMMMMd().format(DateTime.now()),
+                  DateFormat.yMMMMd().format(_selectedDate),
                   style: subHeadStyle,
                 ),
                 Text(
@@ -93,10 +97,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Button(
-            label: "+ Novo Horário",
-            onTap: () => null,
-          ),
+          Button(label: "+ Novo Horário", onTap: () => Get.to(AddSchedule())),
         ],
       ),
     );
@@ -112,7 +113,9 @@ class _HomePageState extends State<HomePage> {
           ThemeService().themeSwitch();
           notifyHelper.displayNotification(
             title: 'Mudança de Tema',
-            // body: Get.isDarkMode ?   "Usando o tema light" : "Usando o Tema Dark", //Troca de mensagens feita pois o getx está recebendo o pacote getx e não do _box do theme_services
+            body: Get.isDarkMode
+                ? "Usando o tema light"
+                : "Usando o Tema Dark", //Troca de mensagens feita pois o getx está recebendo o pacote getx e não do _box do theme_services
           );
           notifyHelper.scheduledNotification();
         },

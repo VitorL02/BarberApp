@@ -34,6 +34,26 @@ TextStyle get subHeadStyle {
   );
 }
 
+TextStyle get titleInputStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Get.isDarkMode ? Colors.white : Colors.black,
+    ),
+  );
+}
+
+TextStyle get labelInputStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: Get.isDarkMode ? Colors.grey[100] : Colors.grey[600],
+    ),
+  );
+}
+
 TextStyle get headingStyle {
   return GoogleFonts.lato(
     textStyle: TextStyle(
