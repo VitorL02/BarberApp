@@ -28,7 +28,7 @@ class _AddScheduleState extends State<AddSchedule> {
           child: Column(
             children: [
               Text(
-                "Cadastre Seu Horario",
+                "Cadastre Seu Horário",
                 style: headingStyle,
               ),
               InputField(
@@ -40,7 +40,6 @@ class _AddScheduleState extends State<AddSchedule> {
                 widget: IconButton(
                   icon: Icon(
                     Icons.calendar_month_outlined,
-                    color: Colors.grey,
                   ),
                   onPressed: () {
                     _getDateUser();
