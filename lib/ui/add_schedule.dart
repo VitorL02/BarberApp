@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, avoid_print, prefer_final_fields
 
 import 'package:barberapp/ui/theme.dart';
+import 'package:barberapp/ui/widgets/button.dart';
 import 'package:barberapp/ui/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class AddSchedule extends StatefulWidget {
 
 class _AddScheduleState extends State<AddSchedule> {
   String _selectedService = 'Corte de Cabelo';
+  final TextEditingController _nameInputController = TextEditingController();
   List<String> servicesList = [
     'Corte de cabelo',
     'Pintura',
@@ -27,10 +29,18 @@ class _AddScheduleState extends State<AddSchedule> {
     'Design de Sobrancelha',
     'Sombrancelha de Rena'
   ];
+  String _repeatSchedule = "Não";
+  List<String> repeatScheduleList = [
+    "Não",
+    "Semanalmente",
+    "Mensalmente",
+  ];
+  int _selectedColor = 0;
 
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   String _endTime = "00:00";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +56,10 @@ class _AddScheduleState extends State<AddSchedule> {
                 style: headingStyle,
               ),
               InputField(
-                  title: "Nome", label: "Digite o nome de quem será agendado"),
+                title: "Nome",
+                label: "Digite o nome de quem será agendado",
+                controller: _nameInputController,
+              ),
               InputField(
                 title: "Informe o Serviço",
                 label: _selectedService,
@@ -114,11 +127,90 @@ class _AddScheduleState extends State<AddSchedule> {
                     ),
                   ),
                 ],
-              )
+              ),
+              InputField(
+                title: "Deseja Repetir Esse Serviço?",
+                label: _repeatSchedule,
+                widget: DropdownButton(
+                  items: repeatScheduleList.map<DropdownMenuItem<String>>(
+                    (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (String? newValueRepeat) {
+                    setState(() {
+                      _repeatSchedule = newValueRepeat!;
+                    });
+                  },
+                  underline: Container(height: 0),
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 32,
+                  elevation: 4,
+                  style: headingStyle,
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _colorBar(),
+                  Button(
+                    label: "+ Criar Horario",
+                    onTap: () => _validateData(),
+                  )
+                ],
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  _colorBar() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Escolha uma Cor",
+          style: titleInputStyle,
+        ),
+        SizedBox(height: 8),
+        Wrap(
+          children: List<Widget>.generate(
+            3,
+            (int index) => GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedColor = index;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  child: _selectedColor == index
+                      ? Icon(
+                          Icons.done,
+                          color: Colors.white,
+                          size: 16,
+                        )
+                      : Container(),
+                  radius: 14,
+                  backgroundColor: index == 0
+                      ? Colors.red[200]
+                      : index == 1
+                          ? Colors.green[300]
+                          : Colors.pink[100],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -193,5 +285,20 @@ class _AddScheduleState extends State<AddSchedule> {
         minute: int.parse(_startTime.split(":")[1].split(" ")[0]),
       ),
     );
+  }
+
+  _validateData() {
+    if (_nameInputController.text.isNotEmpty) {
+      //Adicionar a data base
+      Get.back();
+    } else if (_nameInputController.text.isEmpty) {
+      Get.snackbar(
+        "Campo Obrigatorio Vazio!",
+        "Por favor Preencha todos os dados para agendamento",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[700],
+        icon: Icon(Icons.warning),
+      );
+    }
   }
 }

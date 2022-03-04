@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
       body: Column(
         // ignore: prefer_const_literals_to_create_immutables
