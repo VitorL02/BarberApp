@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:barberapp/database/db_helper.dart';
 import 'package:barberapp/ui/home_page.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'ui/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  await DbHelper.initDb();
   runApp(const MyApp());
 }
 
