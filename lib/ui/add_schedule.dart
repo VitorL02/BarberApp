@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, avoid_print, prefer_final_fields
 
+import 'package:barberapp/controllers/schedule_controller.dart';
+import 'package:barberapp/models/schedule.dart';
 import 'package:barberapp/ui/theme.dart';
 import 'package:barberapp/ui/widgets/button.dart';
 import 'package:barberapp/ui/widgets/input_field.dart';
@@ -15,6 +17,7 @@ class AddSchedule extends StatefulWidget {
 }
 
 class _AddScheduleState extends State<AddSchedule> {
+  final ScheduleController _scheduleController = Get.put(ScheduleController());
   String _selectedService = 'Corte de Cabelo';
   final TextEditingController _nameInputController = TextEditingController();
   List<String> servicesList = [
@@ -289,7 +292,7 @@ class _AddScheduleState extends State<AddSchedule> {
 
   _validateData() {
     if (_nameInputController.text.isNotEmpty) {
-      //Adicionar a data base
+      _addScheduledb();
       Get.back();
     } else if (_nameInputController.text.isEmpty) {
       Get.snackbar(
@@ -300,5 +303,21 @@ class _AddScheduleState extends State<AddSchedule> {
         icon: Icon(Icons.warning),
       );
     }
+  }
+
+  _addScheduledb() async {
+    int value = await _scheduleController.addSchedule(
+        schedule: Schedule(
+      name: _nameInputController.text,
+      service: _selectedService,
+      repeatSchedule: _repeatSchedule,
+      color: _selectedColor,
+      starTime: _startTime,
+      endTime: _endTime,
+      date:
+          DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(_selectedDate),
+      isCompleted: 0,
+    ));
+    print(value);
   }
 }
