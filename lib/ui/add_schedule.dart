@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, avoid_print, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, avoid_print, prefer_final_fields, prefer_adjacent_string_concatenation
 
 import 'package:barberapp/controllers/schedule_controller.dart';
 import 'package:barberapp/models/schedule.dart';
@@ -318,6 +318,6 @@ class _AddScheduleState extends State<AddSchedule> {
           DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(_selectedDate),
       isCompleted: 0,
     ));
-    print(value);
+    print("MyId is:" + "$value");
   }
 }

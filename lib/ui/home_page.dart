@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, unused_element, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, unused_element, avoid_unnecessary_containers, avoid_print
 
+import 'package:barberapp/controllers/schedule_controller.dart';
 import 'package:barberapp/ui/add_schedule.dart';
 import 'package:barberapp/ui/services/notification_service.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ScheduleController _scheduleController = Get.put(ScheduleController());
   DateTime _selectedDate = DateTime.now();
   var notifyHelper;
 
@@ -41,8 +43,26 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          _showSchedules(),
         ],
       ),
+    );
+  }
+
+  _showSchedules() {
+    return Expanded(
+      child: Obx(() {
+        return ListView.builder(
+            itemCount: _scheduleController.schedulesList.length,
+            itemBuilder: (_, context) {
+              print(_scheduleController.schedulesList.length);
+              return Container(
+                width: 100,
+                height: 50,
+                color: Colors.green,
+              );
+            });
+      }),
     );
   }
 
