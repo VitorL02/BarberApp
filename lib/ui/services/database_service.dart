@@ -16,13 +16,17 @@ class DatabaseServices{
     }
 
     //TODO criar o delete de uma Schedule
+    Future deleteSchedule(id) async {
+      return await scheduleCollection.document(id).delete();
+    }
+
 
     //TODO criar a busca de todas as schedules
 
 
     //TODO criar a lista de todas as schedules
 
+
     //TODO criar o update que informa se uma schedule 
 
-    
 }
