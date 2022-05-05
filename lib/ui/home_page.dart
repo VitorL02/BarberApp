@@ -2,6 +2,7 @@
 
 import 'package:barberapp/controllers/schedule_controller.dart';
 import 'package:barberapp/ui/add_schedule.dart';
+import 'package:barberapp/ui/services/database_service.dart';
 import 'package:barberapp/ui/services/notification_service.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
 import 'package:barberapp/ui/theme.dart';
@@ -44,6 +45,12 @@ class _HomePageState extends State<HomePage> {
           _addTaskBar(),
           _addDateBar(),
           _showSchedules(),
+          Button(
+            label: 'Teste get schedule',
+            onTap: () async {
+              await DatabaseServices().getSchedulesFromDatabase();
+            },
+          ),
         ],
       ),
     );

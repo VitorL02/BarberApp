@@ -1,9 +1,9 @@
 import 'package:firedart/firedart.dart';
 
+// ignore: unused_import
 import '../../models/schedule.dart';
 
 class DatabaseServices {
-  //TODO adicionar a lib do firedart
   CollectionReference scheduleCollection =
       Firestore.instance.collection('schedules');
 
@@ -28,12 +28,18 @@ class DatabaseServices {
     });
   }
 
-  //TODO criar o delete de uma Schedule
   Future deleteSchedule(id) async {
     return await scheduleCollection.document(id).delete();
   }
 
   //TODO criar a busca de todas as schedules
+
+  Future<List<Document>> getSchedulesFromDatabase() async {
+    Page<Document> schedules = await scheduleCollection.get();
+    print(schedules);
+    print(schedules.length);
+    return schedules.toList();
+  }
 
   //TODO criar a lista de todas as schedules
 
