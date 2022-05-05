@@ -1,21 +1,21 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:barberapp/database/db_helper.dart';
 import 'package:barberapp/ui/home_page.dart';
 import 'package:barberapp/ui/services/theme_services.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'ui/theme.dart';
 
-Future<void> main() async {
+// ignore: prefer_typing_uninitialized_variables
+const projectId = "barberapp-79994";
+const apiKey = "AIzaSyAUjPtL6jyQqn1pn-8Uim_l60WWFdseGwc";
+
+void main() {
+  Firestore.initialize(projectId);
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
-  await DbHelper.initDb();
-  sqfliteFfiInit();
   runApp(const MyApp());
 }
 
