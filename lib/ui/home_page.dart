@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, unused_element, avoid_unnecessary_containers, avoid_print
 
-import 'package:barberapp/controllers/schedule_controller.dart';
 import 'package:barberapp/ui/add_schedule.dart';
 import 'package:barberapp/ui/services/database_service.dart';
 import 'package:barberapp/ui/services/notification_service.dart';
@@ -8,6 +7,7 @@ import 'package:barberapp/ui/services/theme_services.dart';
 import 'package:barberapp/ui/theme.dart';
 import 'package:barberapp/ui/widgets/button.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:firedart/firestore/models.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,7 +22,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ScheduleController _scheduleController = Get.put(ScheduleController());
+  Future<List<Document>> schedules =
+      DatabaseServices().getSchedulesFromDatabase();
+
   DateTime _selectedDate = DateTime.now();
   var notifyHelper;
 
@@ -49,6 +51,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Teste get schedule',
             onTap: () async {
               await DatabaseServices().getSchedulesFromDatabase();
+              print(DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br')
+                  .format(_selectedDate));
             },
           ),
         ],
@@ -58,18 +62,13 @@ class _HomePageState extends State<HomePage> {
 
   _showSchedules() {
     return Expanded(
-      child: Obx(() {
-        return ListView.builder(
-            itemCount: _scheduleController.schedulesList.length,
-            itemBuilder: (_, context) {
-              print(_scheduleController.schedulesList.length);
-              return Container(
-                width: 100,
-                height: 50,
-                color: Colors.green,
-              );
-            });
-      }),
+      child: FutureBuilder<List<Document>>(
+        future: schedules,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
+          return Text('Funciona');
+        },
+      ),
     );
   }
 

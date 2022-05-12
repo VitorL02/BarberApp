@@ -32,22 +32,22 @@ class DatabaseServices {
     return await scheduleCollection.document(id).delete();
   }
 
-  //TODO criar a busca de todas as schedules
-
   Future<List<Document>> getSchedulesFromDatabase() async {
     Page<Document> schedules = await scheduleCollection.get();
     print(schedules);
     print(schedules.length);
-    return schedules.toList();
+    print(schedules.map((schedules) => schedules['date']));
+    return schedules;
   }
-
-  //TODO criar a lista de todas as schedules
 
   //TODO criar o update que atualiza uma schedule
 
   //TODO criar um metodo que filtra por data
 
-  Future scheduleDate(date) async {
-    return scheduleCollection.where(date);
-  }
+  // Future scheduleDate(String date) async {
+  //   QueryReference schedulesWhereCondition =
+  //       await scheduleCollection.where(schedules['date']);
+  //   print(schedulesWhereCondition);
+  //   return schedulesWhereCondition;
+  // }
 }
